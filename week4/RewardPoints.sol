@@ -141,8 +141,8 @@ contract RewardPoints {
         require(_merchant != msg.sender);
         require(isAdmin[msg.sender] || msg.sender == owner);
         merchants.push(Merchant(1, 0, false));
-        addrToMerchantId[_merchant] += 1; // RK: addrToMerchantId += 1;
-        emit AddedMerchant(_merchant,addrToMerchantId[_merchant] ); //RK: emit AddedMerchant(_merchant);
+        addrToMerchantId[_merchant] += 1; 
+        emit AddedMerchant(_merchant,addrToMerchantId[_merchant] ); 
     }
 
     function banMerchant(uint _id) external onlyAdmin {
@@ -151,7 +151,7 @@ contract RewardPoints {
         // remember we're not removing a merchant.
         require(_id != 0);
         require(isAdmin[msg.sender] || msg.sender == owner);
-        merchants[_id].isApproved = false;  // RK:  merchants[_merchant] = false;
+        merchants[_id].isApproved = false;  
         emit BannedMerchant(_id);
     }
 
@@ -180,7 +180,7 @@ contract RewardPoints {
         // parameter is user address instead of ID.
         require(_user != 0);
         require(isAdmin[msg.sender] || msg.sender == owner);
-                users[addrToUserId[_user]].isApproved = false;  //RK: "user"[_user] = false;
+                users[addrToUserId[_user]].isApproved = false;  
         emit BannedUser(_user,addrToUserId[_user]);
     }
 
@@ -189,7 +189,7 @@ contract RewardPoints {
         // Hints: Do the reverse of banUser
         require(_user != 0);
         require(isAdmin[msg.sender] || msg.sender == owner);
-        users[addrToUserId[_user]].isApproved = false;  //RK: "user"[_user] = true;
+        users[addrToUserId[_user]].isApproved = false;  
         emit ApprovedUser(_user,addrToUserId[_user]);
     }
 
@@ -205,7 +205,7 @@ contract RewardPoints {
         // 4. Emit event
         require(_operator != 0);
         require(isMerchantOwner(msg.sender));
-        merchants[addrToMerchantId[msg.sender]].isOperator[_operator] = true; //RK: "operator"[_operator] = true;
+        merchants[addrToMerchantId[msg.sender]].isOperator[_operator] = true; 
         emit AddedOperator(addrToMerchantId[_operator],_operator);
     }
 
@@ -214,7 +214,7 @@ contract RewardPoints {
         // Hints: Do the reverse of addOperator
        require(_operator != 0);
        require(isMerchantOwner (msg.sender));
-       merchants[addrToMerchantId[msg.sender]].isOperator[_operator] = false; //RK: "operator"[_operator] = false;
+       merchants[addrToMerchantId[msg.sender]].isOperator[_operator] = false; 
        emit RemovedOperator(addrToMerchantId[_operator],_operator);
     }
 
@@ -225,7 +225,7 @@ contract RewardPoints {
         // remove the old owner and once for the new owner.
         require(_newAddr != 0);
         require(isMerchantOwner(msg.sender));
-       merchants[addrToMerchantId[msg.sender]].isOperator[_oldAddr] = false; // RK: "newAdd"[_newAddr] = true;
+       merchants[addrToMerchantId[msg.sender]].isOperator[_oldAddr] = false; 
        merchants[addrToMerchantId[msg.sender]].isOperator[_newAddr] = true;
 
         emit TransferredMerchantOwnership(addrToMerchantId[_newAddr],_oldAddr,_newAddr);
@@ -240,8 +240,8 @@ contract RewardPoints {
         // for the user in the User struct.
         require(_user != 0);
         require(_points != 0);
-        require(isMerchantOwner(msg.sender)); //RK:isMerchantOwner[msg.sender]);
-        users[addrToUserId[_user]].totalEarnedPoints += _points;         //RK: "user"(_user) = true;
+        require(isMerchantOwner(msg.sender)); 
+        users[addrToUserId[_user]].totalEarnedPoints += _points;         
         users[addrToUserId[_user]].merchantToEarnedPts[addrToMerchantId[msg.sender]] += _points;
 
         //RK: "points"(_points) = true;
